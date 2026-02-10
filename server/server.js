@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
+const mongoose = require("mongoose"); // Add this
 
 // Load env variables
 dotenv.config();
@@ -13,13 +14,8 @@ const app = express();
 
 // Configure CORS properly
 app.use(cors({
-  origin: [
-    'https://moviemint-e1ia.onrender.com',
-    'http://localhost:3000'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  origin: ['https://moviemint-e1ia.onrender.com', 'http://localhost:3000'],
+  credentials: true
 }));
 
 // Middlewares
@@ -28,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Request logging
 app.use((req, res, next) => {
-  console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
   next();
 });
 
@@ -43,31 +39,13 @@ app.use("/api/movies", moviesRoute);
 app.use("/api/theatres", theatresRoute);
 app.use("/api/bookings", bookingsRoute);
 
-// Test routes for debugging
+// Health check
 app.get("/api/health", (req, res) => {
   res.json({ 
-    status: "MovieMint API running",
+    status: "OK", 
+    message: "MovieMint API is running",
     timestamp: new Date(),
-    env: process.env.NODE_ENV
-  });
-});
-
-app.get("/api/debug", (req, res) => {
-  res.json({
-    status: 'Server is running',
-    time: new Date(),
-    jwtSecret: process.env.JWT_SECRET ? 'SET' : 'NOT SET',
-    nodeEnv: process.env.NODE_ENV,
-    port: process.env.PORT
-  });
-});
-
-app.post("/api/test-login", (req, res) => {
-  console.log("Test login body:", req.body);
-  res.json({
-    success: true,
-    message: "Test endpoint working",
-    received: req.body
+    mongodb: mongoose.connection.readyState === 1 ? "connected" : "disconnected"
   });
 });
 
@@ -76,27 +54,37 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(
-      path.join(__dirname, "../client/build/index.html")
-    );
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
   });
 }
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Server Error:', err.message);
-  console.error('Error Stack:', err.stack);
-  res.status(500).json({ 
-    success: false,
-    error: 'Internal server error',
-    message: err.message 
-  });
+  res.status(500).json({ error: 'Internal server error' });
 });
 
-// Start server
+// CRITICAL: Proper port binding for Render
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`JWT_SECRET: ${process.env.JWT_SECRET ? 'SET' : 'NOT SET'}`);
+
+// Start server
+const server = app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`✅ MongoDB readyState: ${mongoose.connection.readyState}`);
+}).on('error', (err) => {
+  console.error('❌ Server failed to start:', err.message);
+  process.exit(1);
+});
+
+// Handle graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+    mongoose.connection.close(false, () => {
+      console.log('MongoDB connection closed');
+      process.exit(0);
+    });
+  });
 });
