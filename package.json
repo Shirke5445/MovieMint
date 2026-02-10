@@ -1,14 +1,15 @@
+# Update your package.json with the correct scripts
+@'
 {
   "name": "MovieMint",
   "version": "1.0.0",
-  "description": "Backend for MovieMint MERN project",
+  "description": "MovieMint MERN project",
   "private": true,
-  "main": "server.js",
-  "type": "commonjs",
+  "main": "server/server.js",
   "scripts": {
-    "build": "cd server && npm install  && cd ../client && npm install && npm run build",
     "start": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-deps": "npm install && cd client && npm install",
+    "build": "cd client && npm run build"
   },
   "author": "Girish Shirke",
   "license": "ISC",
@@ -23,5 +24,9 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
+'@ | Out-File -FilePath package.json -Encoding UTF8
