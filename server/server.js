@@ -2,21 +2,22 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
-const mongoose = require("mongoose"); // Add this
+const mongoose = require("mongoose");
 
 // Load env variables
 dotenv.config();
+
+console.log("=== SERVER STARTING ===");
+console.log("NODE_ENV:", process.env.NODE_ENV || "development");
+console.log("PORT:", process.env.PORT || 5000);
 
 // DB connection
 require("./config/dbConfig");
 
 const app = express();
 
-// Configure CORS properly
-app.use(cors({
-  origin: ['https://moviemint-e1ia.onrender.com', 'http://localhost:3000'],
-  credentials: true
-}));
+// CORS - allow all for now
+app.use(cors());
 
 // Middlewares
 app.use(express.json());
@@ -28,7 +29,25 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// TEST ROUTES (add these before your actual routes)
+app.get("/api/status", (req, res) => {
+  res.json({ 
+    status: "Server is running", 
+    time: new Date(),
+    mongodb: mongoose.connection.readyState === 1 ? "connected" : "disconnected"
+  });
+});
+
+app.post("/api/test-login", (req, res) => {
+  console.log("Test login called:", req.body);
+  res.json({ 
+    success: true, 
+    message: "Test route works",
+    received: req.body 
+  });
+});
+
+// Your actual routes
 const userRoutes = require("./routes/usersRoute");
 const moviesRoute = require("./routes/moviesRoute");
 const theatresRoute = require("./routes/theatresRoute");
@@ -61,30 +80,21 @@ if (process.env.NODE_ENV === "production") {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Server Error:', err.message);
-  res.status(500).json({ error: 'Internal server error' });
+  console.error('Error Stack:', err.stack);
+  res.status(500).json({ 
+    success: false,
+    error: 'Internal server error',
+    message: err.message 
+  });
 });
 
-// CRITICAL: Proper port binding for Render
-const PORT = process.env.PORT || 5000;
-
 // Start server
-const server = app.listen(PORT, () => {
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
   console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`✅ MongoDB readyState: ${mongoose.connection.readyState}`);
 }).on('error', (err) => {
   console.error('❌ Server failed to start:', err.message);
   process.exit(1);
-});
-
-// Handle graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: closing HTTP server');
-  server.close(() => {
-    console.log('HTTP server closed');
-    mongoose.connection.close(false, () => {
-      console.log('MongoDB connection closed');
-      process.exit(0);
-    });
-  });
 });

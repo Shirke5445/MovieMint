@@ -45,7 +45,10 @@ exports.loginUser = async (req, res) => {
     console.log("Password verified for:", email);
     
     // Check if JWT_SECRET is set (try both uppercase and lowercase)
-    const jwtSecret = process.env.JWT_SECRET || process.env.jwt_secret;
+    const jwtSecret = process.env.JWT_SECRET || process.env.jwt_secret || "MoviesMint";
+console.log("Using JWT secret from:", 
+  process.env.JWT_SECRET ? "JWT_SECRET" : 
+  process.env.jwt_secret ? "jwt_secret" : "default");
     
     if (!jwtSecret) {
       console.error("❌ ERROR: JWT_SECRET is not set!");
