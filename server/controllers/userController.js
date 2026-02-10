@@ -1,65 +1,12 @@
-const User = require("../models/userModel");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-
-// Register User
-exports.registerUser = async (req, res) => {
-  try {
-    console.log("=== REGISTER REQUEST ===");
-    console.log("Request body:", req.body);
-    
-    const { name, email, password } = req.body;
-    
-    if (!name || !email || !password) {
-      console.log("Validation failed - missing fields");
-      return res.status(400).json({ 
-        success: false, 
-        message: "Name, email and password are required" 
-      });
-    }
-    
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      console.log("User already exists:", email);
-      return res.status(400).json({ 
-        success: false, 
-        message: "User already exists" 
-      });
-    }
-
-    console.log("Creating new user:", email);
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ 
-      name, 
-      email, 
-      password: hashedPassword 
-    });
-    
-    console.log("User created successfully:", user._id);
-    
-    res.status(201).json({ 
-      success: true, 
-      message: "User registered successfully, Please login" 
-    });
-    
-  } catch (error) {
-    console.error("=== REGISTER ERROR ===");
-    console.error("Error:", error.message);
-    console.error("Stack:", error.stack);
-    
-    res.status(500).json({ 
-      success: false, 
-      message: error.message 
-    });
-  }
-};
-
 // Login User
 exports.loginUser = async (req, res) => {
   try {
     console.log("=== LOGIN REQUEST ===");
     console.log("Request body:", req.body);
-    console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
+    
+    // Check BOTH uppercase and lowercase JWT secret
+    console.log("Checking JWT_SECRET:", process.env.JWT_SECRET ? "SET" : "NOT SET");
+    console.log("Checking jwt_secret:", process.env.jwt_secret ? "SET" : "NOT SET");
     
     const { email, password } = req.body;
     
@@ -97,20 +44,30 @@ exports.loginUser = async (req, res) => {
 
     console.log("Password verified for:", email);
     
-    // Check if JWT_SECRET is set
-    if (!process.env.JWT_SECRET) {
-      console.error("ERROR: JWT_SECRET is not set!");
-      throw new Error("JWT_SECRET is not configured");
+    // Check if JWT_SECRET is set (try both uppercase and lowercase)
+    const jwtSecret = process.env.JWT_SECRET || process.env.jwt_secret;
+    
+    if (!jwtSecret) {
+      console.error("❌ ERROR: JWT_SECRET is not set!");
+      console.error("Checked both JWT_SECRET and jwt_secret");
+      console.error("Please set JWT_SECRET in Render environment variables");
+      return res.status(500).json({ 
+        success: false, 
+        message: "Server configuration error: JWT secret is not configured",
+        help: "Add JWT_SECRET to Render environment variables"
+      });
     }
     
+    console.log("✅ JWT Secret found, length:", jwtSecret.length);
     console.log("Generating JWT token...");
+    
     const token = jwt.sign(
       { userId: user._id }, 
-      process.env.JWT_SECRET || "temporary-secret-key-for-development", 
+      jwtSecret, 
       { expiresIn: "1d" }
     );
     
-    console.log("Token generated successfully for:", email);
+    console.log("✅ Token generated successfully for:", email);
     
     res.status(200).json({ 
       success: true, 
@@ -126,41 +83,6 @@ exports.loginUser = async (req, res) => {
     
   } catch (error) {
     console.error("=== LOGIN ERROR ===");
-    console.error("Error:", error.message);
-    console.error("Stack:", error.stack);
-    
-    res.status(500).json({ 
-      success: false, 
-      message: error.message 
-    });
-  }
-};
-
-// Get Current User
-exports.getCurrentUser = async (req, res) => {
-  try {
-    console.log("=== GET CURRENT USER ===");
-    console.log("User ID from token:", req.userId);
-    
-    const user = await User.findById(req.userId).select("-password");
-    
-    if (!user) {
-      console.log("User not found with ID:", req.userId);
-      return res.status(404).json({ 
-        success: false, 
-        message: "User not found" 
-      });
-    }
-    
-    console.log("Current user found:", user.email);
-    
-    res.status(200).json({ 
-      success: true, 
-      user 
-    });
-    
-  } catch (error) {
-    console.error("=== GET CURRENT USER ERROR ===");
     console.error("Error:", error.message);
     console.error("Stack:", error.stack);
     
