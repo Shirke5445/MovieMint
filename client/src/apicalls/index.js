@@ -21,26 +21,32 @@ export const axiosInstance = axios.create({
 // Request interceptor - attach token automatically
 axiosInstance.interceptors.request.use(
   (config) => {
+    console.log(`📤 API Request: ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`);
     const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log("🔑 Token attached to request");
     }
     return config;
   },
   (error) => {
-    console.error("Request error:", error);
+    console.error("❌ Request error:", error);
     return Promise.reject(error);
   }
 );
 
 // Response interceptor - handle errors globally
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log(`✅ API Response: ${response.status} ${response.config.url}`);
+    return response;
+  },
   (error) => {
-    console.error("API Error:", {
+    console.error("❌ API Error:", {
       url: error.config?.url,
       status: error.response?.status,
-      message: error.message
+      message: error.message,
+      fullError: error
     });
     
     if (error.response?.status === 401) {
