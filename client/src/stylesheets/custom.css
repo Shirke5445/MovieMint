@@ -1,0 +1,1736 @@
+/*******************HOME************************/
+
+.movie-card {
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #0d0d0d;
+  box-shadow: 0 8px 20px rgba(52, 211, 153, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-card img {
+  width: 100%;       /* fill card width */
+  height: 300px;      /* height adjusts to keep aspect ratio */
+  display: block;    /* removes small gaps under img */
+  border-radius: 12px;
+  transition: transform 0.4s ease;
+}
+
+.movie-card:hover img {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 10px 20px 40px rgba(52, 211, 153, 0.35);
+}
+
+/* Title overlay */
+.movie-title-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0)
+  );
+  text-align: center;
+}
+
+.movie-title-overlay h1 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #34d399;
+  letter-spacing: 0.5px;
+}
+
+.movie-title-below {
+  margin-top: 8px;
+  margin-bottom: 18px;          /* spacing from poster */
+  text-align: center;        /* center under poster */
+  font-size: 15px;
+  font-weight: 600;
+  color: #000000;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.movie-title-below:hover {
+  color: #34d399;            /* optional hover effect */
+}
+
+
+.search-container-full {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.search-container-full .search-icon-full {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1.3rem;
+  pointer-events: none; /* allows clicking input */
+}
+
+.search-input-full {
+  width: 100%;
+  padding: 12px 15px 12px 45px; /* padding-left for icon */
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.search-input-full:focus {
+  border-color: #34d399; /* accent color */
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.35);
+}
+
+
+
+.w-400 {
+    width: 400px;
+}
+
+.content {
+  min-height: 85vh;
+  border: 1px solid #b1b1b1;
+}
+
+.underline {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+i{
+  font-size: 20px;
+}
+
+table {
+  border: 1px solid #b1b1b1;
+}
+thead th {
+  border-bottom: 1px solid #b1b1b1 !important;
+  text-transform: uppercase;
+}
+
+.search-input {
+  height: 60px;
+  border-radius: 5px;
+}
+
+.divider {
+  border-bottom: 1px solid #e1e1e1;
+  margin: 10px 0;
+}
+
+/* seats */
+
+.seat {
+  height: 30px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border : 1px solid #b1b1b1;
+  cursor: pointer;
+}
+
+
+.selected-seat {
+  background-color: #118838;
+}
+
+.selected-seat h1 {
+  color: white !important;
+}
+
+.booked-seat {
+  background-color: #b1b1b1;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+
+/* loader  */
+
+.loader-parent {
+  position: fixed;
+  background-color: black;
+  inset: 0;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+}
+
+.loader {
+  height: 30px;
+  width: 30px;
+  border: 4px solid var(--colour-secondary);
+  border-top-color: var(--colour-primary);
+  border-radius: 50%;
+  animation: loader-anim 1s linear infinite;
+}
+
+/* loader animation */
+
+@keyframes loader-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Container */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 6px 12px;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* User info */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 20px;
+  transition: background 0.3s ease;
+}
+
+.user-info i {
+  color: #34d399;
+  font-size: 1.2rem;
+}
+
+.user-info span {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Hover effect */
+.user-info:hover {
+  background: rgba(52, 211, 153, 0.6);
+}
+
+/* Logout button */
+.logout-btn {
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.logout-btn i {
+  font-size: 1.2rem;
+  color: #34d399;
+}
+
+/* Hover effect */
+.logout-btn:hover {
+  background: rgba(52, 211, 153, 0.6);
+  transform: scale(1.1);
+}
+
+/******************************* Login ***************************************/
+
+/* Page background */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #141e30, #243b55);
+}
+
+/* Card */
+.login-card {
+  width: 400px;
+  background: #000000;
+  padding: 30px 25px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.6s ease;
+}
+
+/* Title */
+.login-title {  
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(90deg, #ffffff, #a7f3d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.25s ease, text-shadow 0.25s ease;
+}
+
+.center-title {
+  text-align: center;
+}
+
+.login-title span {
+  color: #34d399; /* mint green */
+  -webkit-text-fill-color: #34d399;
+}
+
+.login-title:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 15px rgba(52, 211, 153, 0.6);
+}
+
+/* Subtitle */
+.login-subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+.auth-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+  border-color: #34d399;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.35);
+}
+
+/* Actions */
+.auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Register link */
+.auth-link {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #34d399;
+  font-weight: 500;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+  color: #fbbf24;
+}
+
+.auth-form .ant-form-item-label > label {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/********************************register*******************************/
+
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--primary);
+}
+
+.register-card {
+  width: 400px;
+  padding: 24px;
+  background: #111827;
+  border-radius: 12px;
+}
+
+.register-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #ffffff, #a7f3d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+.register-title span {
+  color: #34d399; /* mint green */
+  -webkit-text-fill-color: #34d399;
+}
+
+.register-title:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 15px rgba(52, 211, 153, 0.6);
+}
+
+/* Subtitle */
+.register-subtitle {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+
+/***************TheatreForMovie******************/
+
+.movie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #111827, #1f2933);
+  padding: 20px;
+  border-radius: 14px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.movie-info h1 {
+  margin: 4px 0;
+}
+
+.movie-info .text-2xl {
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #ffffff, #a7f3d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.movie-info .text-md {
+  color: #d1d5db;
+  font-size: 0.95rem;
+}
+
+.date-picker {
+  text-align: center;
+}
+
+.date-picker h1 {
+  color: #e5e7eb;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+.date-picker input[type="date"] {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #eff1f4;
+  color: #000000;
+  outline: none;
+  cursor: pointer;
+}
+
+.date-picker input[type="date"]:hover {
+  box-shadow: 0 0 0 2px #34d399;
+}
+
+.theatres-title {
+  margin-top: 20px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #111827;
+}
+
+.theatre-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.theatre-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+}
+
+.theatre-card h1 {
+  margin-bottom: 4px;
+}
+
+.theatre-card .text-sm {
+  color: #6b7280;
+}
+
+.show-time {
+  background: #ecfdf5;
+  border: 1px solid #34d399;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 600;
+  color: #065f46;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.show-time:hover {
+  background: #34d399;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d1d5db, transparent);
+  margin: 12px 0;
+}
+
+
+/*******************Profile*********************/
+
+/* Profile Page */
+.profile-page {
+  padding: 1rem;
+}
+
+.profile-header {
+  margin-bottom: 14px;
+}
+
+/* PageTitle text */
+.profile-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #0a0a0a;
+  text-transform: uppercase;
+}
+
+/* Small accent underline like home */
+.profile-header h1::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin-top: 6px;
+  background: linear-gradient(90deg, #34d399, #22c55e);
+  border-radius: 2px;
+}
+
+.profile-subtitle {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-top: -6px;
+}
+
+/* Card Container */
+.profile-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Card wrapper */
+.profile-card {
+  background: #020617;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* Tabs nav spacing */
+.profile-tabs .ant-tabs-nav {
+  margin-bottom: 16px;
+}
+
+/* Each tab */
+.profile-tabs .ant-tabs-tab {
+  background: #020617;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin-right: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Hover – small pop out */
+.profile-tabs .ant-tabs-tab:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(52, 211, 153, 0.25);
+}
+
+/* Active tab */
+.profile-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  box-shadow: 0 10px 22px rgba(52, 211, 153, 0.35);
+}
+
+/* Tab label */
+.tab-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #a7f3d0;
+}
+
+/* Active text */
+.profile-tabs
+  .ant-tabs-tab.ant-tabs-tab-active
+  .tab-label {
+  color: #ffffff;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 0;
+  color: #9ca3af;
+}
+
+.empty-state h2 {
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+
+
+/* Empty Bookings UI */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-state h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  color: #6b7280;
+}
+
+
+/************************Profile Theatres Form*************************/
+/* Theatre Form Background */
+.theatre-form {
+  background: #0f172a; /* dark background */
+  padding: 20px;
+  border-radius: 12px;
+  color: #ffffff; /* default font color inside form */
+}
+
+/* Form Labels */
+.theatre-form .ant-form-item-label > label {
+  color: #ffffff; /* white labels */
+  font-weight: 500;
+}
+
+/* Inputs, Textareas, Selects */
+.theatre-input,
+.theatre-textarea,
+.theatre-form input,
+.theatre-form textarea,
+.theatre-form select {
+  background: #1e293b; /* dark input background */
+  color: #ffffff; /* white text */
+  border: 1px solid #334155; /* slightly darker border */
+}
+
+/* Placeholders */
+.theatre-input::placeholder,
+.theatre-textarea::placeholder,
+.theatre-form input::placeholder,
+.theatre-form textarea::placeholder,
+.theatre-form select::placeholder {
+  color: #cbd5e1; /* lighter placeholder for readability */
+}
+
+/* Input focus */
+.theatre-input:focus,
+.theatre-textarea:focus,
+.theatre-form input:focus,
+.theatre-form textarea:focus,
+.theatre-form select:focus {
+  border-color: #34d399;
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.25);
+  outline: none;
+}
+
+/* Form Buttons */
+.theatre-form-actions {
+  display: flex;
+  justify-content: flex-end; /* ensures Add/Save stays right */
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.theatre-form-actions button {
+  color: #ffffff;
+}
+
+/* Reset delete & edit icons in TheatresList */
+.edit-icon {
+  color: #38bdf8; /* blue */
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.delete-icon {
+  color: #ef4444; /* red */
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.edit-icon:hover,
+.delete-icon:hover {
+  transform: scale(1.15);
+}
+
+
+
+/****************************Profile Shows ***************************************/
+
+/* Modal */
+.shows-modal .ant-modal-content {
+  background: #0f172a;
+  border-radius: 12px; /* Rounded corners for modal */
+  padding: 16px;
+}
+
+/* Header */
+.shows-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.shows-header h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f9fafb;
+}
+
+/* Table */
+.shows-table {
+  background: #1e293b;       /* Dark card background */
+  border-radius: 12px;       /* Rounded corners */
+  overflow: hidden;          /* Ensure table respects border-radius */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Table rows hover effect */
+.shows-table .ant-table-tbody > tr:hover > td {
+  background: #111827;      /* Slightly darker on hover */
+}
+
+/* Delete icon */
+.show-delete {
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+/* Form card */
+.shows-form-card {
+  background: #1e293b;
+  border-radius: 12px;      /* Rounded corners */
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Form labels */
+.shows-form-card .ant-form-item-label > label {
+  color: #f9fafb; /* white color */
+  font-weight: 500;
+}
+
+/* Form headings */
+.shows-form-card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f9fafb;
+  margin-bottom: 16px;
+}
+
+/* Form inputs and select */
+.shows-form-card input,
+.shows-form-card select,
+.shows-form-card textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;            /* Rounded inputs */
+  border: 1px solid #334155;
+  background: #ffffff;
+  color: #000000;
+}
+
+.shows-form-card input:focus,
+.shows-form-card select:focus,
+.shows-form-card textarea:focus {
+  outline: none;
+  border-color: #34d399; /* accent color */
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.35);
+}
+
+/* Actions */
+.shows-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+
+
+/************************Theatres List*******************************/
+
+/* Wrapper */
+.theatres-wrapper {
+  padding: 20px;
+}
+
+/* Header */
+.theatres-header {
+  display: flex;
+  justify-content: space-between; /* title left, button right */
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Add Theatre Button */
+.theatres-header .ant-btn {
+  border-radius: 8px;
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.theatres-header .ant-btn:hover {
+  background-color: #38bdf8;
+  color: #0f172a;
+  transform: translateY(-2px);
+}
+
+/* Card */
+.theatres-card {
+  background: #0f172a;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Table */
+.theatres-card .ant-table {
+  background: transparent;
+}
+
+.theatres-card .ant-table-thead > tr > th {
+  color: #e5e7eb;
+  background: #1e293b;
+  font-weight: 600;
+  border-bottom: 1px solid #334155;
+}
+
+.theatres-card .ant-table-tbody > tr > td {
+  color:#34d399;
+  border-bottom: 1px solid #334155;
+}
+
+/* Actions */
+.theatre-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Edit Icon */
+.edit-icon {
+  color: #38bdf8;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.edit-icon:hover {
+  transform: scale(1.15);
+}
+
+/* Delete Icon */
+.delete-icon {
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.delete-icon:hover {
+  transform: scale(1.15);
+}
+
+/* Shows Link */
+.shows-link {
+  color: #34d399;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.shows-link:hover {
+  text-decoration: underline;
+  color: #10b981;
+}
+
+
+/*************************** ADMIN **********************************/
+
+/* Admin Page Container */
+.admin-page {
+  padding: 1rem;
+}
+
+/* Header */
+.admin-header {
+  margin-bottom: 14px;
+}
+
+/* PageTitle text */
+.admin-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #0a0a0a;
+  text-transform: uppercase;
+}
+
+/* Small accent underline */
+.admin-header h1::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin-top: 6px;
+  background: linear-gradient(90deg, #34d399, #22c55e);
+  border-radius: 2px;
+}
+
+/* Tabs Card */
+.admin-card {
+  background: #020617;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* Tabs nav spacing */
+.admin-tabs .ant-tabs-nav {
+  margin-bottom: 16px;
+}
+
+/* Each tab */
+.admin-tabs .ant-tabs-tab {
+  background: #020617;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin-right: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Hover – small pop out */
+.admin-tabs .ant-tabs-tab:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(52, 211, 153, 0.25);
+}
+
+/* Active tab */
+.admin-tabs .ant-tabs-tab.ant-tabs-tab-active {
+  box-shadow: 0 10px 22px rgba(52, 211, 153, 0.35);
+}
+
+/* Tab label */
+.tab-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #a7f3d0;
+}
+
+/* Active tab text */
+.admin-tabs
+  .ant-tabs-tab.ant-tabs-tab-active
+  .tab-label {
+  color: #ffffff;
+}
+
+/* Theatres Table Card inside Admin */
+.admin-theatres-card {
+  background: #0f172a; /* Dark card */
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Table header text centered */
+.admin-theatres-card .ant-table-thead > tr > th {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Table rows */
+.admin-theatres-card .ant-table-tbody > tr > td {
+  text-align: center;
+  color: #d1d5db; /* soft white/gray text */
+}
+
+/* Status Tag */
+.admin-theatres-card .ant-tag-green {
+  background-color: #22c55e; /* green */
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.admin-theatres-card .ant-tag-orange {
+  background-color: #f59e0b; /* orange */
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+/* Action Buttons */
+.theatre-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Edit button */
+.edit-icon {
+  color: #38bdf8; /* Blue */
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+.edit-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Delete button */
+.delete-icon {
+  color: #ef4444; /* Red */
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+.delete-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Shows link */
+.shows-link {
+  color: #34d399; /* soft green */
+  cursor: pointer;
+  font-weight: 500;
+}
+.shows-link:hover {
+  text-decoration: underline;
+  color: #22c55e;
+}
+
+
+/************************ Admin Movies Form **********************************/
+
+/* =========================
+   MOVIE FORM MODAL WRAPPER
+   ========================= */
+
+.movie-form-modal .ant-modal-content {
+  background: #0f172a;
+  border-radius: 12px;
+  padding: 18px;
+  color: #ffffff;
+}
+
+/* Remove white line under modal title */
+.movie-form-modal .ant-modal-header {
+  background: transparent;
+  border-bottom: none;
+}
+
+.movie-form-modal .ant-modal-title {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Close icon */
+.movie-form-modal .ant-modal-close {
+  color: #cbd5e1;
+}
+.movie-form-modal .ant-modal-close:hover {
+  color: #ffffff;
+}
+
+/* =========================
+   FORM LABELS
+   ========================= */
+
+.movie-form-modal .ant-form-item-label > label {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* =========================
+   INPUTS / TEXTAREA / NUMBER
+   ========================= */
+
+.movie-form-modal .movie-input,
+.movie-form-modal .ant-input,
+.movie-form-modal .ant-input-number,
+.movie-form-modal .ant-input-number-input,
+.movie-form-modal textarea,
+.movie-form-modal .ant-select-selector {
+  background: #1e293b !important; /* NOT full black */
+  color: #ffffff !important;
+  border: 1px solid #334155 !important;
+  border-radius: 8px;
+}
+
+/* Ensure typed text is visible */
+.movie-form-modal input,
+.movie-form-modal textarea {
+  caret-color: #ffffff;
+}
+
+/* =========================
+   PLACEHOLDER
+   ========================= */
+
+.movie-form-modal input::placeholder,
+.movie-form-modal textarea::placeholder {
+  color: #cbd5e1;
+}
+
+/* =========================
+   FOCUS STATE
+   ========================= */
+
+.movie-form-modal input:focus,
+.movie-form-modal textarea:focus,
+.movie-form-modal .ant-input-number-focused,
+.movie-form-modal .ant-select-focused .ant-select-selector {
+  border-color: #34d399 !important;
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.25);
+}
+
+/* =========================
+   SELECT DROPDOWN
+   ========================= */
+
+.ant-select-dropdown {
+  background: #ffffff;
+  border: 1px solid #334155;
+}
+
+.ant-select-item {
+  color: #ffffff;
+}
+
+.ant-select-item-option-active {
+  background: rgba(52, 211, 153, 0.15);
+}
+
+.ant-select-item-option-selected {
+  background: rgba(52, 211, 153, 0.25);
+  color: #34d399;
+}
+
+/* =========================
+   FORM ACTION BUTTONS
+   ========================= */
+
+.movie-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Cancel button */
+.movie-form-actions .ant-btn {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #ffffff;
+}
+
+.movie-form-actions .ant-btn:hover {
+  border-color: #34d399;
+  color: #34d399;
+}
+
+/* Save button */
+.movie-form-actions .ant-btn-primary {
+  background: #34d399;
+  border: none;
+  color: #020617;
+  font-weight: 600;
+}
+
+.movie-form-actions .ant-btn-primary:hover {
+  background: #22c55e;
+}
+
+/* =========================
+   FIX INVISIBLE TEXT (MOVIE FORM)
+   ========================= */
+
+/* InputNumber inner text (Hours / Minutes) */
+.movie-form-modal .ant-input-number-input {
+  color: #ffffff !important;
+}
+
+/* Select selected text */
+.movie-form-modal .ant-select-selection-item {
+  color: #ffffff !important;
+}
+
+/* Multiple select tags (Languages) */
+.movie-form-modal .ant-select-selection-item-content {
+  color: #ffffff !important;
+}
+
+/* Placeholder inside Select */
+.movie-form-modal .ant-select-selection-placeholder {
+  color: #cbd5e1 !important;
+}
+
+/* Dropdown arrow */
+.movie-form-modal .ant-select-arrow {
+  color: #cbd5e1;
+}
+
+/* Hours & Minutes placeholder text */
+.movie-form-modal
+  .ant-input-number-input::placeholder {
+  color: #e5e7eb !important; /* soft white */
+  opacity: 1; /* AntD reduces opacity by default */
+}
+
+/* =========================
+   ANT DATE PICKER – DARK (FIXED)
+   ========================= */
+
+
+.movie-form-modal input[type="date"] {
+  background-color: #1e293b;   /* dark background */
+  color: #ffffff;              /* typed date text */
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+
+  /* THIS LINE FIXES ICON + CALENDAR */
+  color-scheme: dark;
+}
+
+
+/* =========================
+   FIX MULTI-SELECT REMOVE (X) ICON
+   ========================= */
+
+/* Remove (X) icon color */
+.movie-form-modal .ant-select-selection-item-remove {
+  color: #e5e7eb !important; /* white */
+  font-size: 14px;
+}
+
+/* Hover state */
+.movie-form-modal .ant-select-selection-item-remove:hover {
+  color: #ef4444 !important; /* red on hover */
+}
+
+/* Selected tag background (optional polish) */
+.movie-form-modal .ant-select-selection-item {
+  background: #020617 !important;
+  border: 1px solid #334155 !important;
+}
+
+/* Ensure tag text stays white */
+.movie-form-modal .ant-select-selection-item-content {
+  color: #ffffff !important;
+}
+
+
+/************************ Admin Movies List*******************************/
+
+/* =========================
+   MOVIES LIST WRAPPER
+   ========================= */
+
+.movies-list-wrapper {
+  background: #020617;
+  padding: 16px;
+  border-radius: 14px;
+}
+
+/* Header */
+.movies-list-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+/* =========================
+   TABLE STYLING
+   ========================= */
+
+.movies-table .ant-table {
+  background: transparent;
+}
+
+.movies-table .ant-table-container {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.movies-table .ant-table-thead > tr > th {
+  background: #0f172a;
+  color: #ffffff;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 1px solid #1e293b;
+}
+
+.movies-table .ant-table-tbody > tr > td {
+  background: #020617;
+  color: #e5e7eb;
+  text-align: center;
+  border-bottom: 1px solid #1e293b;
+}
+
+.movies-table .ant-table-tbody > tr:hover > td {
+  background: #020617;
+}
+
+/* =========================
+   POSTER
+   ========================= */
+
+.movie-poster {
+  width: 70px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+
+/* =========================
+   ACTION ICONS
+   ========================= */
+
+.movie-action-icons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+/* Edit (Blue) */
+.edit-icon {
+  color: #38bdf8;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.edit-icon:hover {
+  transform: scale(1.15);
+}
+
+/* Delete (Red) */
+.delete-icon {
+  color: #ef4444;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  transform: scale(1.15);
+}
+
+/* =========================
+   PAGINATION
+   ========================= */
+
+.movies-table .ant-pagination-item {
+  background: #020617;
+  border-color: #334155;
+}
+
+.movies-table .ant-pagination-item a {
+  color: #e5e7eb;
+}
+
+.movies-table .ant-pagination-item-active {
+  border-color: #34d399;
+}
+
+.movies-table .ant-pagination-item-active a {
+  color: #34d399;
+}
+
+.movies-table .ant-pagination-prev button,
+.movies-table .ant-pagination-next button {
+  color: #e5e7eb;
+}
+
+.movies-table .ant-table-tbody > tr:hover > td {
+  background: #0f172a !important; /* subtle dark blue */
+}
+
+
+/************************ Admin Theatres  List*******************************/
+
+/* =======================
+   ADMIN THEATRES LIST
+   ======================= */
+
+/* Table Card Container */
+.admin-theatres-card {
+  background: #0f172a; /* dark card */
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Table Header */
+.admin-theatres-card .ant-table-thead > tr > th {
+  color: #ffffff;
+  font-weight: 600;
+  text-align: center;
+  background: #1e293b; /* header dark shade */
+}
+
+/* Table Body */
+.admin-theatres-card .ant-table-tbody > tr > td {
+  color: #e5e7eb; /* soft white */
+  text-align: center;
+  background: #0f172a; /* dark row background */
+}
+
+/* Remove hover white overlay */
+.admin-theatres-card .ant-table-tbody > tr:hover > td {
+  background: #0f172a !important; /* keep original dark */
+  color: #e5e7eb !important; /* text readable */
+}
+
+/* =======================
+   FORCE COLOR IN ANT TABLE CELLS
+   ======================= */
+
+/* Approve (GREEN) */
+.ant-table-tbody td span.admin-action-approve {
+  color: #22c55e !important;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Block (RED) */
+.ant-table-tbody td span.admin-action-block {
+  color: #ef4444 !important;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Hover effects */
+.ant-table-tbody td span.admin-action-approve:hover {
+  color: #16a34a !important;
+  transform: translateY(-1px);
+}
+
+.ant-table-tbody td span.admin-action-block:hover {
+  color: #dc2626 !important;
+  transform: translateY(-1px);
+}
+
+/* =======================
+   Admin Theatre Status
+   ======================= */
+
+/* Approved */
+.ant-table-tbody td span.admin-status-approved {
+  color: #22c55e !important; /* green */
+  font-weight: 300;
+}
+
+/* Pending / Blocked */
+.ant-table-tbody td span.admin-status-pending {
+  color: #f59e0b !important; /* amber */
+  font-weight: 300;
+}
+
+
+
+
+/*********************** BOOK SHOW **************************/
+
+/* =======================
+   BOOK SHOW PAGE
+   ======================= */
+
+.book-show-page {
+  color: #ffffff;
+}
+
+/* =======================
+   SHOW INFO CARD
+   ======================= */
+
+.card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  color: #e5e7eb;
+}
+
+.card h1 {
+  margin: 0;
+}
+
+/* Theatre / Movie Info */
+.card .text-sm {
+  color: #cbd5e1;
+}
+
+.text-sm-add {
+  font-size: 11px;
+  color:#cbd5e1;
+}
+
+.card .text-sm span {
+  display: block;
+  text-align: center;
+}
+
+
+.card .text-2xl {
+  color: #ffffff;
+  font-weight: 700;
+  
+}
+
+/* =======================
+   SEATS LAYOUT
+   ======================= */
+
+.seat {
+  height: 36px;
+  width: 36px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background: #020617;
+  color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* Seat hover */
+.seat:hover {
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+/* Selected seat */
+.selected-seat {
+  background: #22c55e;
+  color: #020617;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+/* Booked seat */
+.booked-seat {
+  background: #334155;
+  color: #94a3b8;
+  border-color: #334155;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Seat number */
+.seat h1 {
+  font-size: 0.75rem;
+}
+
+/* =======================
+   SELECTED SEATS SUMMARY
+   ======================= */
+
+.selected-seats-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 10px;
+  color: #e5e7eb;
+}
+
+.selected-seats-card b {
+  color: #ffffff;
+}
+
+/* =======================
+   BOOK NOW BUTTON
+   ======================= */
+
+button,
+.book-now-btn {
+  background: linear-gradient(90deg, #34d399);
+  color: #020617;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 8px 18px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover,
+.book-now-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+}
+
+/* =======================
+   REMOVE WHITE HOVER (AntD)
+   ======================= */
+
+.ant-card-hoverable:hover {
+  background: #0f172a !important;
+}
+
+
+
+/****************************** Bookings *************************************/
+
+.bk-card {
+  display: flex;
+  justify-content: space-between;
+  background: #000000;
+  border-radius: 12px;
+  border-color: #000000;
+  padding: 18px;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+/* LIGHT hover effect on WHOLE card */
+.bk-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 10px 20px 40px rgba(52, 211, 153, 0.35);
+}
+
+.bk-info {
+  flex: 1;
+}
+
+.bk-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.bk-theatre {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+.bk-address {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.bk-datetime  {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.bk-datetime span {
+  font-size: 13px;
+  color: #ffffff;
+
+}
+
+
+.bk-seats {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.bk-amount {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.bk-id {
+  font-size: 12px;
+  color: #ffffff;
+  margin-top: 6px;
+}
+
+.bk-poster-wrap {
+  margin-left: 14px;
+}
+
+.bk-poster {
+  width: 110px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgb(40, 39, 39);
+}
