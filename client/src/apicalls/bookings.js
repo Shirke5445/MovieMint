@@ -3,7 +3,7 @@ import { axiosInstance } from ".";
 // make payment (Razorpay order)
 export const MakePayment = async (amount) => {
   try {
-    const response = await axiosInstance.post("/api/bookings/make-payment", {
+    const response = await axiosInstance.post("/bookings/make-payment", {
       amount,
     });
     return response.data;
@@ -16,7 +16,7 @@ export const MakePayment = async (amount) => {
 export const BookShowTickets = async (payload) => {
   try {
     const response = await axiosInstance.post(
-      "/api/bookings/book-show",
+      "/bookings/book-show",
       payload
     );
     return response.data;
@@ -28,7 +28,7 @@ export const BookShowTickets = async (payload) => {
 // get bookings
 export const GetBookingsOfUser = async () => {
   try {
-    const response = await axiosInstance.get("/api/bookings/get-bookings");
+    const response = await axiosInstance.get("/bookings/get-bookings");
     return response.data;
   } catch (error) {
     return error.response.data;
