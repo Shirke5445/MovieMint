@@ -1,10 +1,10 @@
+// server/middlewares/authMiddleware.js
 const jwt = require("jsonwebtoken");
 
 module.exports = function (req, res, next) {
   try {
     console.log("=== AUTH MIDDLEWARE ===");
     
-    // Get token from Authorization header
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -18,18 +18,18 @@ module.exports = function (req, res, next) {
     const token = authHeader.split(" ")[1];
     console.log("Token found, verifying...");
 
-    // Check both uppercase and lowercase JWT secret
-    const jwtSecret = process.env.JWT_SECRET || process.env.jwt_secret || "MovieMint";
-    console.log("Using JWT secret from:", process.env.JWT_SECRET ? "JWT_SECRET" : process.env.jwt_secret ? "jwt_secret" : "default");
+    // MUST match the same logic as userController.js
+    const jwtSecret = process.env.JWT_SECRET || process.env.jwt_secret || "MoviesMint";
+    console.log("Using JWT secret from:", 
+      process.env.JWT_SECRET ? "JWT_SECRET" : 
+      process.env.jwt_secret ? "jwt_secret" : "default");
 
-    // Verify token
     const decoded = jwt.verify(token, jwtSecret);
     console.log("Token verified for user:", decoded.userId);
 
-    // Attach to req
     req.userId = decoded.userId;
-
     next();
+    
   } catch (error) {
     console.error("Auth middleware error:", error.message);
 
